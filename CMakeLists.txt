@@ -13,6 +13,8 @@ if(POLICY CMP0079)
   cmake_policy(SET CMP0079 NEW)
 endif()
 
+set(CMAKE_BUILD_TYPE Debug)
+
 ##########################################################
 
 # https://stackoverflow.com/questions/43862273/cmake-c-include-relative-to-base-directory
