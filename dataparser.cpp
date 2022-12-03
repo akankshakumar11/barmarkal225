@@ -9,8 +9,7 @@ std::map<std::string, std::vector<std::string>> DataParser::makeAirportMap(const
 
     for (auto& airport : all_airports) {
         std::vector<std::string> airport_data;
-        std::string airport_name = airport[0]; // id
-        airport_data.push_back(airport[1]); // name
+        std::string airport_name = airport[1]; // name
         airport_data.push_back(airport[2]); // city
         airport_data.push_back(airport[3]); // country
         airport_data.push_back(airport[4]); // code
@@ -31,9 +30,7 @@ std::vector<std::vector<std::string>> DataParser::makeRouteVector(const std::str
     for (auto& route : all_routes) {
         std::vector<std::string> route_data;
         route_data.push_back(route[2]); // source airport code
-        route_data.push_back(route[3]); // source airport id
         route_data.push_back(route[4]); // destination airport code
-        route_data.push_back(route[5]); // destination airport id
         route_vector_2d.push_back(route_data);
     }
     return route_vector_2d;
@@ -56,7 +53,6 @@ const std::vector<std::vector<std::string>> DataParser::tokenizeCSV(const std::s
             std::getline(stream, token, ',' );
             line_data.push_back(token);
         }
-        
         line_vector_2d.push_back(line_data);
     }
 
