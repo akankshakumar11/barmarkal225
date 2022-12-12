@@ -71,6 +71,10 @@ Vertex BFS::front(){
     return bfs_queue_.front();
 }
 
+std::queue<Vertex> BFS::getQueue(){
+    return bfs_queue_;
+}
+
 
 void BFS::startBFS() {
     std::list<int>::iterator iter;
