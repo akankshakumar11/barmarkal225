@@ -236,7 +236,7 @@ int test_dijkstras() {
 void page_rank_test(){
     DataParser d;
     vector<vector<string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
-    map<string, double> page_rank = pageRank(route_vector_2d); 
+    map<string, vector<double>> page_rank = pageRank(route_vector_2d); 
 
         std::cout << "test" << std::endl;
 
