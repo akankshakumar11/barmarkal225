@@ -14,7 +14,7 @@ This program generates the best possible flight itineraries from user-inputted o
 
 4. Run the following commands in order:
 
-  `g++ main.cpp -o main`
+  `make main`
   
   `./main`
   
