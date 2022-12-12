@@ -1,6 +1,5 @@
 # Algorithms & outputs
 
-The output and correctness of each algorithm – You should summarize, visualize, or highlight some part of the full-scale run of each algorithm. Additionally, the report should briefly describe what tests you performed to confirm that each algorithm was working as intended.
 
 ## Breadth-First Search (BFS)
 This algorithm was used for 
