@@ -2,7 +2,9 @@
 #include <cassert>
 #include "BFS.cpp"
 #include "Dijkstras.cpp"
-#include "pageRank.cpp"
+//#include "pageRank.cpp"
+#include <vector>
+#include <string>
 #include <vector>
 #include <iostream>
 
@@ -161,42 +163,42 @@ int test_bfs() {
 
     int bfs_tests = 0;
 
-    std::vector<Vertex> vertices = {"start", "middle", "end"};
+    DataParser d;
+
+    
+    std::map<std::string, std::vector<std::string>> airport_map = d.makeAirportMap("airports.dat.csv");
+    std::vector<std::vector<std::string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
+
+    std::vector<Vertex> vertices;
+
+    for (const auto &curr : airport_map) {
+        vertices.push_back(curr.second[2]);
+    }
+
     BFS bfs(vertices, "CMI");
 
-    for (size_t i = 0; i < route_vector_2d.size(); i++) {
-        bfs.addEdge(Edge(route_vector_2d[i][0], route_vector_2d[i][1]));
+    for (auto& a : route_vector_2d) {
+        bfs.addEdge(Edge(a[0], a[1]));
     }
 
-    // bfs.addEdge(Edge("start", "middle"));
-    // bfs.addEdge(Edge("start", "end"));
-
-    // bfs.slowBFS();
+    bfs.slowBFS();
     bfs.slowBFS();
 
-    // if (bfs.front() == "start") {
-    //     bfs_tests++;
-    // }
-    // std::cout << bfs.front() << endl;
-    // bfs.pop();
+    int airport_num = 1;
 
-    // if (bfs.front() == "middle") {
-    //     bfs_tests++;
-    // }
-    // std::cout << bfs.front() << endl;
-    // bfs.pop();
+    while (!bfs.queue_empty()) {
+        if (airport_num == 1 && bfs.front() == "CMI") {
+            bfs_tests++;
+        } else if (airport_num == 2 && bfs.front() == "DFW") {
+            bfs_tests++;
+        } else if (airport_num == 3 && bfs.front() == "ORD") {
+            bfs_tests++;
+        }
 
-    // if (bfs.front() == "end") {
-    //     bfs_tests++;
-    // }
-    // std::cout << bfs.front() << endl;
-    // bfs.pop();
-
-    while (!bfs.getQueue().isEmpty()) {
-        std::cout << bfs.front() << endl;
+        std::cout << "Airport #" << airport_num << ": " << bfs.front() << std::endl;
+        airport_num++;
         bfs.pop();
     }
-    bfs_tests++;
 
     std::cout << std::endl;
 
@@ -214,11 +216,11 @@ int test_dijkstras() {
     Dijkstras test_1 = Dijkstras(route_vector_2d);
     Graph graph_1 = test_1.getGraph();
 
-    if (graph_1.edgeExists("YGL", "YGW") == true) {
+    if (graph_1.edgeExists("CMI", "DFW") == true) {
         path_tests++;
     }
 
-    if (graph_1.getEdgeWeight("YGL", "YGW") == 1) {
+    if (graph_1.getEdgeWeight("CMI", "DFW") == 1) {
         path_tests++;
     }
 
@@ -233,29 +235,32 @@ int test_dijkstras() {
     return path_tests;
 }
 
+
+/*
 void page_rank_test(){
     DataParser d;
+    PageRank p;
     vector<vector<string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
-    map<string, vector<double>> page_rank = pageRank(route_vector_2d); 
-
-        std::cout << "test" << std::endl;
-
+    map<string, double> page_rank = p.pageRank(route_vector_2d);
     
     //print out ranking 
-    // map<string, vector<double>>::iterator it; 
-    // for(it = page_rank.begin(); it != page_rank.end(); it++){ //iteration through map
-    //     cout << "airport: " << it->first << " ranking:  " << it->second[0] << endl; 
-    // }
-
-    std::vector<string> pr = ranked(page_rank);
-    for(unsigned i = 0; i < pr.size(); i++){
-        std::cout << i+1 ". " <<  pr[i] << std::endl; 
+    map<string, vector<double>>::iterator it; 
+    for(it = page_rank.begin(); it != page_rank.end(); it++) { //iteration through map
+        std::cout << "airport: " << it->first << " ranking:  " << it->second[0] << std::endl; 
     }
+
+
+//    vector<string> pr = ranked(page_rank);
+//    for(unsigned i = 0; i < pr.size(); i++){
+//         cout << i+1 ". " <<  pr[i] << endl; 
+//    }
 }
+*/
+
 
 int main() {
     int tests_passed = airport_map() + route_vector_2d() + test_bfs() + test_dijkstras();
-    //std::cout << tests_passed << " out of 22 tests passed!" << std::endl;
-    page_rank_test();
+    std::cout << tests_passed << " out of 22 tests passed!" << std::endl;
+    //page_rank_test();
     return -1;
 }
