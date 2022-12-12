@@ -65,6 +65,18 @@ public:
     Vertex slowBFS();
 
     /**
+     * Returns size of queue for BFS
+     * @return size of queue as an int
+    */
+    int size();
+
+    /**
+     * Returns whether or not the queue is empty
+     * @return bool indicating if the queue is empty or not
+    */
+    bool queue_empty();
+
+    /**
      * Displays vertices in current BFS
      * @return vertices in order
     */
@@ -75,8 +87,6 @@ public:
      * @return edges in order
     */
     std::string display_edges(Vertex vert);
-
-    std::queue<Vertex> getQueue();
 
 private:
     /* Vector of vertices */
