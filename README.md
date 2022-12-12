@@ -18,4 +18,4 @@ This program generates the best possible flight itineraries from user-inputted o
   
   `./main`
   
-   Follow the program's prompts.
+Adjust any parameters in the main() function in `main.cpp` to specify your request for determining flight paths.
