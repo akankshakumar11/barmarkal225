@@ -1,5 +1,3 @@
-#include "dijkstras.h"
-#include "graph.h"
 #include <queue>
 #include <utility>
 #include <map>
@@ -7,6 +5,9 @@
 #include <sstream>
 #include <string>
 #include <iostream>
+
+#include "dijkstras.h"
+#include "graph.cpp"
 
 Dijkstras::Dijkstras(std::vector<std::vector<std::string>> data) : graph_(true, false) {
     for (size_t i = 0; i < data.size(); ++i) {
@@ -92,7 +93,7 @@ std::vector<Edge> Dijkstras::dijkstrasImplementation(Vertex vert1, Vertex vert2)
     for (curr = vert2; curr != vert1; curr = previous_nodes[curr]) {
         curr_weight = graph_.getEdgeWeight(previous_nodes[curr], curr);
         std::vector<Edge>::iterator iter = shortest_path.begin();
-        it = shortest_path.insert(iter, Edge(previous_nodes[curr], curr, curr_weight, previous_nodes[curr] + "-" + curr));
+        iter = shortest_path.insert(iter, Edge(previous_nodes[curr], curr, curr_weight, previous_nodes[curr] + "-" + curr));
     }
 
     return shortest_path;
