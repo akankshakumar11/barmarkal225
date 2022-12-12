@@ -10,7 +10,7 @@ class PageRank {
      * @param routes - 2d vector with route data (in each row, 1st element is src and 2nd is dest)
      * @return map of airports with ranking
      */
-        map<string, double> pageRank(vector<vector<string>> routes);
+        map<string, vector<double>> pageRank(vector<vector<string>> routes);
 
     /**
      * Takes in directed graph of airports and returns a vector with the airports ranked 
