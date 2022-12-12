@@ -7,8 +7,11 @@ This program generates the best possible flight itineraries from user-inputted o
 # Running the program
 
 1. Download project from GitHub
+
 2. Open in Docker. Follow these instructions if you are unfamiliar: https://courses.engr.illinois.edu/cs225/sp2022/resources/own-machine/.
+
 3. Change directories into the `barmarkal225-main` folder.
+
 4. Run the following commands in order:
 
   `g++ main.cpp -o main`
