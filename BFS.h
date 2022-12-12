@@ -52,7 +52,7 @@ public:
      * @return vertex at the front of the queue
     */
     Vertex front();
-
+    
     /**
      * Starts the BFS traversal
     */
@@ -63,6 +63,18 @@ public:
      * @return next vertex in the  (technically null)
     */
     Vertex slowBFS();
+
+    /**
+     * Displays vertices in current BFS
+     * @return vertices in order
+    */
+    std::string display_vertices();
+
+    /**
+     * Displays edges in current BFS
+     * @return edges in order
+    */
+    std::string display_edges(Vertex vert);
 
 private:
     /* Vector of vertices */
