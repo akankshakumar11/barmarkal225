@@ -20,7 +20,7 @@ class PageRank {
         vector<string> ranked(map<string, vector<double>> page_rank);
 
     /**
-     * creates a map with the destination airport as the key and vector of the source airports as the data
+     * creates a map with the destination or source airport as the key and vector of the source or destination airports as the data
      * @param routes - 2d vector with route data (in each row, 1st element is src and 2nd is dest)
      * @param key_ either 0 (source), or 1 (dest)
      * @param data_ either 0 (source), or 1 (dest)
