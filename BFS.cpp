@@ -43,7 +43,8 @@ BFS::BFS(std::vector<Vertex> vect, std::vector<Edge> edge, Vertex start) {
 
 
 BFS::~BFS() {
-    bfs_queue_.empty();
+    std::queue<Vertex> empty;
+    std::swap(bfs_queue_, empty);
     is_visited_.clear();
     adj_verts_.clear();
     verts_.clear();
@@ -69,10 +70,6 @@ void BFS::pop() {
 
 Vertex BFS::front(){
     return bfs_queue_.front();
-}
-
-std::queue<Vertex> BFS::getQueue(){
-    return bfs_queue_;
 }
 
 
@@ -110,6 +107,14 @@ Vertex BFS::slowBFS() {
     }
 
     return NULL;
+}
+
+bool BFS::queue_empty() {
+    return bfs_queue_.empty();
+}
+
+int BFS::size() {
+    return bfs_queue_.size();
 }
 
 std::string BFS::display_vertices() {
