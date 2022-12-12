@@ -162,30 +162,41 @@ int test_bfs() {
     int bfs_tests = 0;
 
     std::vector<Vertex> vertices = {"start", "middle", "end"};
-    BFS bfs(vertices, "start");
-    bfs.addEdge(Edge("start", "middle"));
-    bfs.addEdge(Edge("start", "end"));
+    BFS bfs(vertices, "CMI");
 
+    for (size_t i = 0; i < route_vector_2d.size(); i++) {
+        bfs.addEdge(Edge(route_vector_2d[i][0], route_vector_2d[i][1]));
+    }
+
+    // bfs.addEdge(Edge("start", "middle"));
+    // bfs.addEdge(Edge("start", "end"));
+
+    // bfs.slowBFS();
     bfs.slowBFS();
-    bfs.slowBFS();
 
-    if (bfs.front() == "start") {
-        bfs_tests++;
-    }
-    std::cout << bfs.front() << endl;
-    bfs.pop();
+    // if (bfs.front() == "start") {
+    //     bfs_tests++;
+    // }
+    // std::cout << bfs.front() << endl;
+    // bfs.pop();
 
-    if (bfs.front() == "middle") {
-        bfs_tests++;
-    }
-    std::cout << bfs.front() << endl;
-    bfs.pop();
+    // if (bfs.front() == "middle") {
+    //     bfs_tests++;
+    // }
+    // std::cout << bfs.front() << endl;
+    // bfs.pop();
 
-    if (bfs.front() == "end") {
-        bfs_tests++;
+    // if (bfs.front() == "end") {
+    //     bfs_tests++;
+    // }
+    // std::cout << bfs.front() << endl;
+    // bfs.pop();
+
+    while (!bfs.getQueue().isEmpty()) {
+        std::cout << bfs.front() << endl;
+        bfs.pop();
     }
-    std::cout << bfs.front() << endl;
-    bfs.pop();
+    bfs_tests++;
 
     std::cout << std::endl;
 
@@ -226,6 +237,9 @@ void page_rank_test(){
     DataParser d;
     vector<vector<string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
     map<string, double> page_rank = pageRank(route_vector_2d); 
+
+        std::cout << "test" << std::endl;
+
     
     //print out ranking 
     // map<string, vector<double>>::iterator it; 
@@ -233,16 +247,15 @@ void page_rank_test(){
     //     cout << "airport: " << it->first << " ranking:  " << it->second[0] << endl; 
     // }
 
-
-   vector<string> pr = ranked(page_rank);
-   for(unsigned i = 0; i < pr.size(); i++){
-        cout << i+1 ". " <<  pr[i] << endl; 
-   }
+    std::vector<string> pr = ranked(page_rank);
+    for(unsigned i = 0; i < pr.size(); i++){
+        std::cout << i+1 ". " <<  pr[i] << std::endl; 
+    }
 }
 
 int main() {
     int tests_passed = airport_map() + route_vector_2d() + test_bfs() + test_dijkstras();
-    std::cout << tests_passed << " out of 22 tests passed!" << std::endl;
+    //std::cout << tests_passed << " out of 22 tests passed!" << std::endl;
     page_rank_test();
     return -1;
 }
