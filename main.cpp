@@ -1,5 +1,11 @@
 #include "dataparser.cpp"
 #include <cassert>
+#include "BFS.cpp"
+#include "Dijkstras.cpp"
+#include <vector>
+#include <iostream>
+
+using namespace std;
 
 int airport_map() {
     int airport_tests = 0;
@@ -139,8 +145,54 @@ int route_vector_2d() {
     return route_tests;
 }
 
+int test_bfs() {
+    std::vector<Vertex> vertices = {"start", "middle", "end"};
+    BFS bfs(vertices, "start");
+    bfs.addEdge(Edge("start", "middle"));
+    bfs.addEdge(Edge("start", "end"));
+
+    bfs.slowBFS();
+    bfs.slowBFS();
+
+    std::cout << bfs.front() << endl;
+    bfs.pop();
+    std::cout << bfs.front() << endl;
+    bfs.pop();
+    std::cout << bfs.front() << endl;
+    bfs.pop();
+
+    return 1;
+}
+
+int test_dijkstras() {
+    int route_tests = 0;
+    DataParser d;
+    std::vector<std::vector<std::string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
+
+    Dijkstras test_1 = Dijkstras(route_vector_2d);
+    Graph graph_1 = test_1.getGraph();
+
+    if (graph_1.edgeExists("YGL", "YGW") == true) {
+        std:: cout << ("hi") << std::endl;
+    }
+
+    if (graph_1.getEdgeWeight("YGL", "YGW") == 1) {
+        std:: cout << ("hi") << std::endl;
+    }
+
+    vector<Edge> path_1 = test_1.dijkstrasImplementation("CMI", "SFO");
+
+    for (Edge e : path_1) {
+        std::cout << e.getLabel() << std::endl;
+    }
+
+    return 1;
+}
+
 int main() {
     int tests_passed = airport_map() + route_vector_2d();
     std::cout << tests_passed << " out of 16 tests passed!" << std::endl;
+    test_dijkstras();
+    test_bfs();
     return -1;
 }
