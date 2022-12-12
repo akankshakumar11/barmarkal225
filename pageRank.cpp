@@ -1,6 +1,6 @@
 #include "pageRank.h"
 
- map<string, double> PageRank::pageRank(vector<vector<string>> routes){
+ map<string, vector<double>> PageRank::pageRank(vector<vector<string>> routes){
 
     map<string, vector<string>> in_links = links(routes, 1, 0); //has vector with all the airports that have flights going into key airport
     map<string, vector<string>> out_links = links(routes, 0, 1); //has vector with all the airports that have flights going out of key airport
@@ -34,12 +34,13 @@
             pr.find(routes[k][1])->second[2] = -123; 
         }
     }
-    map<string, double> page_ranking; //map to return 
-    map<string, vector<double>>::iterator it; 
-    for(it = pr.begin(); it != pr.end(); it++){ //iteration through map
-        page_ranking.insert(pair<string,double> (it->first, it->second[0])); //insert just the airport with it's ranking 
-    }
-    return page_ranking;
+    // map<string, double> page_ranking; //map to return 
+    // map<string, vector<double>>::iterator it; 
+    // for(it = pr.begin(); it != pr.end(); it++){ //iteration through map
+    //     page_ranking.insert(pair<string,double> (it->first, it->second[0])); //insert just the airport with it's ranking 
+    // }
+    // return page_ranking;
+    return pr;
  }
 
  vector<string> PageRank::ranked(map<string, vector<double>> page_rank){ //rank all the airports using a vector 
