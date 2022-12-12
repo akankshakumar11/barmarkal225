@@ -107,3 +107,20 @@ Vertex BFS::slowBFS() {
 
     return NULL;
 }
+
+std::string BFS::display_vertices() {
+    string to_return = "";
+    for (Vertex v : verts_) {
+        to_return += v + " ";
+    }
+    return to_return;
+}
+
+
+std::string BFS::display_edges(Vertex vert) {
+    string to_return = "";
+    for (Vertex v : adj_verts_[vert]) {
+        to_return += vert + " goes to " + v + " ";
+    }
+    return to_return;
+}
