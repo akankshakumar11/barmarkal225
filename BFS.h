@@ -76,6 +76,8 @@ public:
     */
     std::string display_edges(Vertex vert);
 
+    std::queue<Vertex> getQueue();
+
 private:
     /* Vector of vertices */
     std::vector<Vertex> verts_;
