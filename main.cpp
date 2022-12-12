@@ -222,8 +222,27 @@ int test_dijkstras() {
     return path_tests;
 }
 
+void page_rank_test(){
+    DataParser d;
+    vector<vector<string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
+    map<string, double> page_rank = pageRank(route_vector_2d); 
+    
+    //print out ranking 
+    // map<string, vector<double>>::iterator it; 
+    // for(it = page_rank.begin(); it != page_rank.end(); it++){ //iteration through map
+    //     cout << "airport: " << it->first << " ranking:  " << it->second[0] << endl; 
+    // }
+
+
+   vector<string> pr = ranked(page_rank);
+   for(unsigned i = 0; i < pr.size(); i++){
+        cout << i+1 ". " <<  pr[i] << endl; 
+   }
+}
+
 int main() {
     int tests_passed = airport_map() + route_vector_2d() + test_bfs() + test_dijkstras();
     std::cout << tests_passed << " out of 22 tests passed!" << std::endl;
+    page_rank_test();
     return -1;
 }
