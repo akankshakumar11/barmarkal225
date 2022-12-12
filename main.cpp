@@ -8,6 +8,9 @@
 using namespace std;
 
 int airport_map() {
+
+    std::cout << "Testing String Parsing and Storing for Airport Data (Map):" << std::endl;
+
     int airport_tests = 0;
     DataParser d;
     std::map<std::string, std::vector<std::string>> airport_map = d.makeAirportMap("airports.dat.csv");
@@ -91,10 +94,15 @@ int airport_map() {
     } else {
         std::cout << "Oh man! PYK not found in airport map!" << std::endl;
     }
+
+    std::cout << std::endl;
+
     return airport_tests;
 }
 
 int route_vector_2d() {
+    std::cout << "Testing String Parsing and Storing for Routes Data (2-Dimensional Vector):" << std::endl;
+
     int route_tests = 0;
     DataParser d;
     std::vector<std::vector<std::string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
@@ -142,10 +150,16 @@ int route_vector_2d() {
         route_tests++;
     }
 
+    std::cout << std::endl;
+
     return route_tests;
 }
 
 int test_bfs() {
+    std::cout << "Testing BFS Implementation:" << std::endl;
+
+    int bfs_tests = 0;
+
     std::vector<Vertex> vertices = {"start", "middle", "end"};
     BFS bfs(vertices, "start");
     bfs.addEdge(Edge("start", "middle"));
@@ -154,18 +168,34 @@ int test_bfs() {
     bfs.slowBFS();
     bfs.slowBFS();
 
-    std::cout << bfs.front() << endl;
-    bfs.pop();
-    std::cout << bfs.front() << endl;
-    bfs.pop();
+    if (bfs.front() == "start") {
+        bfs_tests++;
+    }
     std::cout << bfs.front() << endl;
     bfs.pop();
 
-    return 1;
+    if (bfs.front() == "middle") {
+        bfs_tests++;
+    }
+    std::cout << bfs.front() << endl;
+    bfs.pop();
+
+    if (bfs.front() == "end") {
+        bfs_tests++;
+    }
+    std::cout << bfs.front() << endl;
+    bfs.pop();
+
+    std::cout << std::endl;
+
+    return bfs_tests;
 }
 
 int test_dijkstras() {
-    int route_tests = 0;
+    std::cout << "Testing Dijkstra's Implementation:" << std::endl;
+
+    int path_tests = 0;
+
     DataParser d;
     std::vector<std::vector<std::string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
 
@@ -173,26 +203,26 @@ int test_dijkstras() {
     Graph graph_1 = test_1.getGraph();
 
     if (graph_1.edgeExists("YGL", "YGW") == true) {
-        std:: cout << ("hi") << std::endl;
+        path_tests++;
     }
 
     if (graph_1.getEdgeWeight("YGL", "YGW") == 1) {
-        std:: cout << ("hi") << std::endl;
+        path_tests++;
     }
 
     vector<Edge> path_1 = test_1.dijkstrasImplementation("CMI", "SFO");
 
-    for (Edge e : path_1) {
-        std::cout << e.getLabel() << std::endl;
+    if (path_1.size() == 2) {
+        path_tests++;
     }
 
-    return 1;
+    std::cout << std::endl;
+
+    return path_tests;
 }
 
 int main() {
-    int tests_passed = airport_map() + route_vector_2d();
-    std::cout << tests_passed << " out of 16 tests passed!" << std::endl;
-    test_dijkstras();
-    test_bfs();
+    int tests_passed = airport_map() + route_vector_2d() + test_bfs() + test_dijkstras();
+    std::cout << tests_passed << " out of 22 tests passed!" << std::endl;
     return -1;
 }
