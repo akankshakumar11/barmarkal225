@@ -2,6 +2,7 @@
 #include <cassert>
 #include "BFS.cpp"
 #include "Dijkstras.cpp"
+#include "pageRank.cpp"
 #include <vector>
 #include <iostream>
 
