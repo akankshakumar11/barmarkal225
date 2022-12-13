@@ -2,9 +2,7 @@
 #include <cassert>
 #include "BFS.cpp"
 #include "Dijkstras.cpp"
-//#include "pageRank.cpp"
-#include <vector>
-#include <string>
+#include "pageRank.cpp"
 #include <vector>
 #include <iostream>
 
@@ -158,6 +156,60 @@ int route_vector_2d() {
     return route_tests;
 }
 
+int test_bfs_1() {
+
+    int bfs_tests = 0;
+
+    std::vector<Vertex> vertices; // = {"start", "middle", "end"};
+
+    DataParser d;
+    std::vector<std::vector<std::string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
+
+    // std::cout << route_vector_2d.size() << std::endl;
+
+    for (size_t i = 0; i < route_vector_2d.size(); i++) {
+        vertices.push_back(route_vector_2d[i][0]);
+        // std::cout << route_vector_2d[i][0] << std::endl;
+    }
+
+    BFS bfs(vertices, "CMI");
+
+
+    for (size_t i = 0; i < route_vector_2d.size(); i++) {
+        bfs.addEdge(Edge(route_vector_2d[i][0], route_vector_2d[i][1]));
+    }
+
+    int min_path_length = route_vector_2d.size();
+    int curr_path_length = 0;
+    while ((curr_path_length = bfs.findBFS("CMI", "SFO")) > 1) {
+        if (curr_path_length < min_path_length) {
+            min_path_length = curr_path_length;
+        }
+        // std::cout << std::endl;
+        // std::cout << std::endl;
+    }
+    std::cout << "Number of Flights in Shortest Path Trip (BFS):" << std::endl;
+    std::cout << min_path_length << std::endl;
+
+    std::cout << "Number of layovers:" << std::endl;
+    std::cout << min_path_length - 1 << std::endl;
+    
+
+    // bfs.slowBFS();
+    // bfs.slowBFS();
+
+
+    // while (!bfs.getQueue().empty()) {
+    //     std::cout << bfs.front() << endl;
+    //     bfs.pop();
+    // }
+    bfs_tests++;
+
+    std::cout << std::endl;
+
+    return bfs_tests;
+}
+
 int test_bfs() {
     std::cout << "Testing BFS Implementation:" << std::endl;
 
@@ -181,12 +233,14 @@ int test_bfs() {
         bfs.addEdge(Edge(a[0], a[1]));
     }
 
+    // bfs.startBFS();
     bfs.slowBFS();
     bfs.slowBFS();
+
 
     int airport_num = 1;
 
-    while (!bfs.queue_empty()) {
+    while (!bfs.getQueue().empty()) {
         if (airport_num == 1 && bfs.front() == "CMI") {
             bfs_tests++;
         } else if (airport_num == 2 && bfs.front() == "DFW") {
@@ -200,9 +254,96 @@ int test_bfs() {
         bfs.pop();
     }
 
+    
+
     std::cout << std::endl;
 
     return bfs_tests;
+}
+
+void run_bfs(Vertex source, Vertex dest) {
+    std::cout << "Running BFS Implementation:" << std::endl;
+
+    int bfs_tests = 0;
+
+    DataParser d;
+
+    
+    std::map<std::string, std::vector<std::string>> airport_map = d.makeAirportMap("airports.dat.csv");
+    std::vector<std::vector<std::string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
+
+    std::vector<Vertex> vertices;
+
+    for (const auto &curr : airport_map) {
+        vertices.push_back(curr.second[2]);
+    }
+
+    BFS bfs(vertices, source);
+
+    for (auto& a : route_vector_2d) {
+        bfs.addEdge(Edge(a[0], a[1]));
+    }
+
+    // bfs.startBFS();
+    bfs.slowBFS();
+    bfs.slowBFS();
+
+
+    int airport_num = 1;
+
+    while (!bfs.getQueue().empty()) {
+        std::cout << "Airport #" << airport_num << ": " << bfs.front() << std::endl;
+        airport_num++;
+        bfs.pop();
+    }
+
+
+    std::cout << std::endl;
+
+    BFS bfs2(vertices, source);
+
+
+    for (size_t i = 0; i < route_vector_2d.size(); i++) {
+        bfs2.addEdge(Edge(route_vector_2d[i][0], route_vector_2d[i][1]));
+    }
+
+    int min_path_length = route_vector_2d.size();
+    int curr_path_length = 0;
+
+    while ((curr_path_length = bfs2.findBFS(source, dest)) > 1) {
+        if (curr_path_length < min_path_length) {
+            min_path_length = curr_path_length;
+        }
+        // std::cout << std::endl;
+        // std::cout << std::endl;
+    }
+    std::cout << "Number of Flights in Shortest Path Trip (BFS):" << std::endl;
+    std::cout << min_path_length << std::endl;
+
+    std::cout << "Number of layovers:" << std::endl;
+    std::cout << min_path_length - 1 << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+}
+
+void run_dijkstras(Vertex source, Vertex dest) {
+    std::cout << "Running Dijkstra's algorithm on " << source << " --> " << dest << ":" << std::endl;
+
+
+    DataParser d;
+    std::vector<std::vector<std::string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
+
+    Dijkstras test_1 = Dijkstras(route_vector_2d);
+    Graph graph_1 = test_1.getGraph();
+
+    vector<Edge> path_1 = test_1.dijkstrasImplementation(source, dest);
+
+    std::cout << "You need to take at least " << path_1.size() << " flights to get from " << source << " to " << dest << ":" << std::endl;
+
+
+
+    std::cout << std::endl;
 }
 
 int test_dijkstras() {
@@ -216,11 +357,11 @@ int test_dijkstras() {
     Dijkstras test_1 = Dijkstras(route_vector_2d);
     Graph graph_1 = test_1.getGraph();
 
-    if (graph_1.edgeExists("CMI", "DFW") == true) {
+    if (graph_1.edgeExists("YGL", "YGW") == true) {
         path_tests++;
     }
 
-    if (graph_1.getEdgeWeight("CMI", "DFW") == 1) {
+    if (graph_1.getEdgeWeight("YGL", "YGW") == 1) {
         path_tests++;
     }
 
@@ -235,32 +376,30 @@ int test_dijkstras() {
     return path_tests;
 }
 
-
-/*
 void page_rank_test(){
     DataParser d;
     PageRank p;
     vector<vector<string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
-    map<string, double> page_rank = p.pageRank(route_vector_2d);
+    map<string, vector<double>> page_rank = p.pageRank(route_vector_2d); 
+
+        std::cout << "test" << std::endl;
+
     
     //print out ranking 
-    map<string, vector<double>>::iterator it; 
-    for(it = page_rank.begin(); it != page_rank.end(); it++) { //iteration through map
-        std::cout << "airport: " << it->first << " ranking:  " << it->second[0] << std::endl; 
+    // map<string, vector<double>>::iterator it; 
+    // for(it = page_rank.begin(); it != page_rank.end(); it++){ //iteration through map
+    //     cout << "airport: " << it->first << " ranking:  " << it->second[0] << endl; 
+    // }
+
+    std::vector<string> pr = p.ranked(page_rank);
+    for(unsigned i = 0; i < pr.size(); i++){
+        std::cout << i+1 + ". " <<  pr[i] << std::endl; 
     }
-
-
-//    vector<string> pr = ranked(page_rank);
-//    for(unsigned i = 0; i < pr.size(); i++){
-//         cout << i+1 ". " <<  pr[i] << endl; 
-//    }
 }
-*/
 
-
-int main() {
-    int tests_passed = airport_map() + route_vector_2d() + test_bfs() + test_dijkstras();
-    std::cout << tests_passed << " out of 22 tests passed!" << std::endl;
-    //page_rank_test();
-    return -1;
+int main(int argc, char** argv) {
+    run_bfs(argv[1], argv[2]);
+    run_dijkstras(argv[1], argv[2]);
+    page_rank_test();
+    return argc;
 }
