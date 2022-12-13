@@ -47,6 +47,11 @@ public:
     */
     void pop();
 
+    /**
+     * Pushes vertex
+    */
+    void push(Vertex v);
+
      /**
      * Returns vertex at the front of the queue
      * @return vertex at the front of the queue
@@ -65,18 +70,6 @@ public:
     Vertex slowBFS();
 
     /**
-     * Returns size of queue for BFS
-     * @return size of queue as an int
-    */
-    int size();
-
-    /**
-     * Returns whether or not the queue is empty
-     * @return bool indicating if the queue is empty or not
-    */
-    bool queue_empty();
-
-    /**
      * Displays vertices in current BFS
      * @return vertices in order
     */
@@ -87,6 +80,12 @@ public:
      * @return edges in order
     */
     std::string display_edges(Vertex vert);
+
+    std::queue<Vertex> getQueue();
+
+    int findBFS(Vertex source, Vertex dest);
+
+    void unvisit(Vertex v);
 
 private:
     /* Vector of vertices */
