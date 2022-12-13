@@ -20,6 +20,7 @@ BFS::BFS(std::vector<Vertex> vect, Vertex start) {
 }
 
 
+
 BFS::BFS(std::vector<Vertex> vect, std::vector<Edge> edge, Vertex start) {
     adj_verts_ = std::map<Vertex, std::vector<Vertex>>();
     is_visited_ = std::map<Vertex, bool>();
@@ -43,8 +44,9 @@ BFS::BFS(std::vector<Vertex> vect, std::vector<Edge> edge, Vertex start) {
 
 
 BFS::~BFS() {
-    std::queue<Vertex> empty;
-    std::swap(bfs_queue_, empty);
+    while (!bfs_queue_.empty()) {
+        bfs_queue_.pop();
+    }
     is_visited_.clear();
     adj_verts_.clear();
     verts_.clear();
@@ -67,14 +69,23 @@ void BFS::pop() {
     bfs_queue_.pop();
 }
 
+void BFS::push(Vertex v) {
+    bfs_queue_.push(v);
+    is_visited_[v] = true;
+}
+
 
 Vertex BFS::front(){
     return bfs_queue_.front();
 }
 
+std::queue<Vertex> BFS::getQueue(){
+    return bfs_queue_;
+}
+
 
 void BFS::startBFS() {
-    std::list<int>::iterator iter;
+    std::list<int>::iterator i;
 
     while (!bfs_queue_.empty()) {
         Vertex v = bfs_queue_.front();
@@ -87,6 +98,41 @@ void BFS::startBFS() {
             }
         }
     }
+}
+
+int BFS::findBFS(Vertex source, Vertex dest) {
+    std::list<int>::iterator i;
+    int counter = 1;
+
+    while (!bfs_queue_.empty()) {
+        Vertex v = bfs_queue_.front();
+        //std::cout << v << " --> ";
+        bfs_queue_.pop();
+
+        for (Vertex iter : adj_verts_[v]) {
+            if (is_visited_[iter] == false) {
+                is_visited_[iter] = true;
+                //std::cout << iter << " --> ";
+                bfs_queue_.push(iter);
+                counter++;
+                if (iter == dest) {
+                    unvisit(dest);
+                    bfs_queue_.pop();
+                    bfs_queue_.push(source);
+                    return counter;
+                }
+
+            }
+        }
+    }
+    unvisit(dest);
+    bfs_queue_.pop();
+    bfs_queue_.push(source);
+    return counter;
+}
+
+void BFS::unvisit(Vertex v) {
+    is_visited_[v] = false;
 }
 
 
@@ -107,14 +153,6 @@ Vertex BFS::slowBFS() {
     }
 
     return NULL;
-}
-
-bool BFS::queue_empty() {
-    return bfs_queue_.empty();
-}
-
-int BFS::size() {
-    return bfs_queue_.size();
 }
 
 std::string BFS::display_vertices() {
