@@ -100,7 +100,6 @@ void page_rank_test(){
     vector<vector<string>> route_vector_2d = d.makeRouteVector("routes.dat.csv");
     map<string, vector<double>> page_rank = p.pageRank(route_vector_2d); 
 
-        std::cout << "test" << std::endl;
 
     
     //print out ranking 
@@ -110,8 +109,12 @@ void page_rank_test(){
     // }
 
     std::vector<string> pr = p.ranked(page_rank);
-    for(unsigned i = 0; i < pr.size(); i++){
-        std::cout << i+1 + ". " <<  pr[i] << std::endl; 
+
+            // std::cout << page_rank.size() << std::endl;
+
+    std::cout << "Top 10 Most Popular Airports (using PageRank): " << std::endl; 
+    for(unsigned i = 0; i < 10; i++){
+        std::cout << i+1 << ". " <<  pr[pr.size() - i - 1] << std::endl; 
     }
 }
 
