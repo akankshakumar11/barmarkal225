@@ -96,7 +96,7 @@ std::vector<Edge> Dijkstras::dijkstrasImplementation(Vertex vert1, Vertex vert2)
         iter = shortest_path.insert(iter, Edge(previous_nodes[curr], curr, curr_weight, previous_nodes[curr] + "-" + curr));
     }
 
-    std::cout << "You need to take at least " << shortest_path.size() << " flights to get from " << vert1 << " to " << vert2 << ":" << std::endl;
+    // std::cout << "You need to take at least " << shortest_path.size() << " flights to get from " << vert1 << " to " << vert2 << ":" << std::endl;
 
     int num_flights = 1;
 
